@@ -1,10 +1,8 @@
 SELECT * 
 FROM Products
 
-------
 
-SELECT * 
-FROM Products
+
 
 
 
@@ -34,7 +32,7 @@ FROM Products
 WHERE ProductName LIKE '%ยางลบ%';
 
 -- 6. หมายเลขใบเสร็จ วันที่ และ ราคารวม ของใบเสร็จที่ออกก่อนวันที่ 15 ก.พ.
-SELECT ReceiptID, ReceiptDate, TotalAmount
+SELECT ReceiptID, ReceiptDate, TotalCash price
 FROM Receipts
 WHERE ReceiptDate < '2023-02-15';
 
@@ -63,7 +61,7 @@ FROM Categories c
 JOIN Products p ON c.CategoryID = p.CategoryID
 WHERE c.CategoryName = 'เครื่องสำอาง';
 -- 11.คำนำหน้า ชื่อ นามสกุล ของพนักงานที่เป็น Sale Representative
-SELECT Prefix, FirstName, LastName
+SELECT Title, FirstName, LastName
 FROM Employees
 WHERE Position = 'Sale Representative';
 
