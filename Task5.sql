@@ -1,8 +1,3 @@
-dgdgfdgd
-vxvxcvfdsfsdfdsfdsf
-dfdsfdsfdsf
-
-
-hjtjghjgh
-sdfdsfdsfdsd
-fsdfdsfsfsd
+SELECT categoryName, ProductName, UnitPrice
+FROM Products,Categories
+WHERE Products.CategoryID = Categories.CategoryID
