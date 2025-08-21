@@ -88,3 +88,36 @@ JOIN Products p on od.ProductID = p.ProductID
 JOIN Suppliers s on p.SupplierID = s.SupplierID
 WHERE c.CompanyName = 'Around the Horn'
 
+-- บริษัทลูกค้าชื่อ Around the Horn ซื้อสินค้าอะไรบ้าง จำนวนเท่าใด
+SELECT p.ProductID,p.ProductName, sum(Quantity) จำนวนที่ซื้อ 
+FROM Customers c
+JOIN Orders o on c.CustomerID = o.CustomerID
+JOIN [Order Details] od on o.OrderID = od.OrderID
+JOIN Products p on od.ProductID = p.ProductID
+WHERE c.CompanyName = 'Around the Horn'
+GROUP BY p.ProductID, p.ProductName;
+
+-- ต้องการหมายเลขใบสั่งซื้อ ชื่อพนักงาน และยอดขายในใบสั่งซื้อนั้น
+SELECT o.OrderID,
+       (e.FirstName + ' ' + e.LastName) AS EmployeeName,
+       SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS TotalSales
+FROM Orders o
+JOIN Employees e 
+     ON o.EmployeeID = e.EmployeeID
+JOIN [Order Details] od 
+     ON o.OrderID = od.OrderID
+GROUP BY o.OrderID, e.FirstName, e.LastName
+ORDER BY o.OrderID;
+
+
+SELECT 
+    o.OrderID, 
+    e.FirstName,
+    ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) TotalCash
+FROM Orders o
+JOIN Employees e 
+    ON o.EmployeeID = e.EmployeeID
+JOIN [Order Details] od 
+    ON o.OrderID = od.OrderID
+GROUP BY o.OrderID, e.FirstName;
+
