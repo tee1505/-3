@@ -80,3 +80,11 @@ JOIN Products p
 WHERE e.FirstName = 'Nancy'
 ORDER BY p.ProductID;
 
+-- ต้องการชื่อบริษัทลุกค้าชื่อ Around the Horn ซื้อสินค้าที่มาจากประเทศอะไรบ้าง
+SELECT distinct s.Country
+FROM Customers c JOIN Orders o on c.CustomerID = o.CustomerID
+JOIN [Order Details] od on o.OrderID = od.OrderID
+JOIN Products p on od.ProductID = p.ProductID
+JOIN Suppliers s on p.SupplierID = s.SupplierID
+WHERE c.CompanyName = 'Around the Horn'
+
