@@ -42,3 +42,41 @@ SELECT e.EmployeeID, FirstName, o.OrderID
 from Employees e join Orders o on e.EmployeeID = o.EmployeeID
 ORDER BY EmployeeID
 
+SELECT O.OrderID เลขใบสั่งซื้อ, C.CompanyName ลูกค้า,
+E.FirstName พนักงาน, O.ShipAddress ส่งไปที่
+FROM Orders O
+join Customers C on O.CustomerID=C.CustomerID
+join Employees E on O.EmployeeID=E.EmployeeID
+
+select e.EmployeeID, FirstName , count(*) as [จ านวน order]
+, sum(freight) as [Sum of Freight]
+from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+where year(orderdate) = 1998
+group by e.EmployeeID, FirstName
+
+--ต้องการชื่อบริษัทขนส่ง และจำนวนใบสั่งซื้อที่เกี่ยวข้อง
+SELECT s.CompanyName, count(*) จำนวนorder
+FROM Shippers s JOIN orders o on s.ShipperID = o.ShipVia
+GROUP BY s.CompanyName
+order BY 2 DESC
+-- ต้องการหรัสสินค้า ชื่อสินค้า และจำนวนทั้งหมดที่ขายได้
+SELECT p.ProductID, 
+       p.ProductName, 
+       SUM(od.Quantity) AS จำนวนที่ขายได้
+FROM Products p
+JOIN [Order Details] od 
+     ON p.ProductID = od.ProductID
+GROUP BY p.ProductID, p.ProductName;
+
+--ต้องการหรัสสินค้า ชื่อสินค้า ที่ nancy ขายได้ ทั้งหมด เรียงตามลำดับหรัสสินค้า
+SELECT distinct p.ProductID, p.ProductName
+FROM Employees e
+JOIN Orders o 
+     ON e.EmployeeID = o.EmployeeID
+JOIN [Order Details] od 
+     ON o.OrderID = od.OrderID
+JOIN Products p 
+     ON od.ProductID = p.ProductID
+WHERE e.FirstName = 'Nancy'
+ORDER BY p.ProductID;
+
